@@ -1,0 +1,91 @@
+message Response {
+  User user = 1;
+  Comment comment = 2;
+}
+
+message User {
+ int64 age = 1;
+ int64 user_id = 2;
+ string name = 3;
+ repeated string ex_girl = 4;
+}
+
+message Comment {
+  string id = 1;
+  int64 post_time = 2;
+  string text = 3;
+  Image image = 4;
+}
+
+message Image {
+  string url = 1;
+  int64 width = 2;
+  int64 height = 3;
+  ImageStatus status = 4;
+}
+
+enum ImageStatus {
+    UNKNOWN = 0;
+    NORMAL = 1;
+    EXCEPTION = 2;
+}
+
+enum InteractMessageType {
+  UnknownMessage = 0;
+  AuthorQuestionDigg = 1;
+  MemberQuestionDigg = 2;
+  MemberQuestionAnswered = 3;
+  AuthorSpaceDigg = 4;
+  AuthorSpaceCommentDigg = 5;
+  AuthorSpaceCommented = 6;
+  AuthorSpaceCommentReplied = 7;
+  MemberSpaceCommentDigg = 8;
+  MemberSpaceCommentReplied = 9;
+  AuthorPublishSpaceComment = 10;
+}
+
+message GetInteractMessageListResponse {
+  Data data = 1;
+}
+
+message Data {
+  repeated InteractMessage message = 1;
+  bool has_more = 2;
+}
+
+message InteractMessage {
+  InteractMessageType message_type = 1;
+  string id_str = 2;
+  int64 time = 3;
+  string key = 4;
+  bool is_agg = 5;
+  QuestionDiggMessage question_digg_message = 101;
+}
+
+message QuestionDiggMessage{
+  AskInfo ask_info = 1;
+  User first_digg_user = 2;
+  User recent_digg_user = 3;
+  int64 digg_user_count = 4;
+}
+
+message AskInfo {
+  QuestionInfo question = 1;
+  AnswerInfo answer = 2;
+  }
+
+  message QuestionInfo {
+    string content_id = 1;
+    int64 post_time = 2;
+    string text = 3;
+    Image image = 4;
+    string aid = 5;
+  }
+
+  message AnswerInfo {
+    string content_id = 1;
+    int64 post_time = 2;
+    string text = 3;
+    Image image = 4;
+    string qid = 5;
+  }
